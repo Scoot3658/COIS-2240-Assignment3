@@ -2,6 +2,9 @@ import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class RentalSystem {
 	private static RentalSystem instance;
 	
@@ -21,10 +24,12 @@ public class RentalSystem {
     
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+        saveVehicle(vehicle);
     }
 
     public void addCustomer(Customer customer) {
         customers.add(customer);
+        saveCustomer(customer);
     }
 
     public void rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
@@ -101,4 +106,22 @@ public class RentalSystem {
                 return c;
         return null;
     }
+    
+    //Task 1 Part 2
+    private void saveVehicle(Vehicle vehicle) {
+    	try(FileWriter writer = new FileWriter("vehicles.txt", true)){
+            writer.write(vehicle.getInfo());
+    	} catch (IOException e) {
+    		System.err.println("Error saving vehicle");
+    	}
+    }
+    
+    private void saveCustomer(Customer customer) {
+    	try(FileWriter writer = new FileWriter("customers.txt", true)){
+    		writer.write(customer.toString());
+    	} catch (IOException e) {
+    		System.err.println("Error saving customer");
+    	}
+    }
+    
 }

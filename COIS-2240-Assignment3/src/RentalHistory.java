@@ -1,4 +1,6 @@
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RentalHistory {
@@ -6,6 +8,7 @@ public class RentalHistory {
 
     public void addRecord(RentalRecord record) {
         rentalRecords.add(record);
+        saveRecord(record);
     }
 
     public List<RentalRecord> getRentalHistory() {
@@ -30,5 +33,14 @@ public class RentalHistory {
             }
         }
         return result;
+    }
+    
+    //Task 1 Part 2
+    private void saveRecord(RentalRecord record) {
+        try (FileWriter writer = new FileWriter("rental_records.txt", true)) {
+            writer.write(record.toString());
+        } catch (IOException e) {
+            System.err.println("Error saving rental record");
+        }
     }
 }
