@@ -1,0 +1,4 @@
+Customer ID: 1 | Name: 
+Customer ID: 1 | Name: 
+Customer ID: 1 | Name: George
+Customer ID: 2 | Name: Anne

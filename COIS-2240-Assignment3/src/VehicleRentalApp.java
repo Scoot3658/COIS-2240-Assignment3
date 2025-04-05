@@ -60,6 +60,7 @@ public class VehicleRentalApp {
                 case 2:
                     System.out.print("Enter customer ID: ");
                     int cid = scanner.nextInt();
+                    scanner.nextLine(); // Consume the leftover newline
                     System.out.print("Enter name: ");
                     String cname = scanner.nextLine();
 
