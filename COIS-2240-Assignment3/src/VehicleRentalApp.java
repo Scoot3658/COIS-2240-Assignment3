@@ -136,6 +136,9 @@ public class VehicleRentalApp {
                 case 7:
                 	scanner.close();
                     System.exit(0);
+                    
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }

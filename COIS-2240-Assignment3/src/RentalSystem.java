@@ -27,15 +27,30 @@ public class RentalSystem {
         return instance;
     }
     
-    public void addVehicle(Vehicle vehicle) {
+    public boolean addVehicle(Vehicle vehicle) {
+        if (findVehicleByPlate(vehicle.getLicensePlate()) != null) {
+            System.out.println("Error: A vehicle with license plate " + vehicle.getLicensePlate() + " already exists.");
+            return false;
+        }
+        
         vehicles.add(vehicle);
         saveVehicle(vehicle);
+        System.out.println("Vehicle with license plate " + vehicle.getLicensePlate() + " added successfully.");
+        return true;
     }
 
-    public void addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) {
+        if (findCustomerById(customer.getCustomerId()) != null) {
+            System.out.println("Error: A customer with ID " + customer.getCustomerId() + " already exists.");
+            return false;
+        }
+
         customers.add(customer);
         saveCustomer(customer);
+        System.out.println("Customer with ID " + customer.getCustomerId() + " added successfully.");
+        return true;
     }
+
 
     public void rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
         if (vehicle.getStatus() == Vehicle.VehicleStatus.AVAILABLE) {
@@ -129,7 +144,7 @@ public class RentalSystem {
     	}
     }
     
-    //Task1 Part 3
+    //Task 1 Part 3
     private void loadData() {
         // Load vehicles
         try (Scanner scanner = new Scanner(new File("vehicles.txt"))) {
@@ -224,8 +239,6 @@ public class RentalSystem {
         } catch (IOException e) {
             System.err.println("Error loading rental records:"  + e.getMessage());
         }
-    }
-
-		
+    }		
     
 }
