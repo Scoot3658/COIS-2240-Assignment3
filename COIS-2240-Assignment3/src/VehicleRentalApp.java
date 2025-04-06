@@ -98,7 +98,7 @@ public class VehicleRentalApp {
 
                 case 4:
                 	System.out.println("List of Vehicles:");
-                	rentalSystem.displayAvailableVehicles();
+                	rentalSystem.displayRentedVehicles();
 
                 	System.out.print("Enter license plate: ");
                     String returnPlate = scanner.nextLine().toUpperCase();

@@ -90,6 +90,19 @@ public class RentalSystem {
         System.out.println();
     }
     
+    // Added method
+    public void displayRentedVehicles() {
+    	System.out.println("|     Type         |\tPlate\t|\tMake\t|\tModel\t|\tYear\t|");
+    	System.out.println("---------------------------------------------------------------------------------");
+    	 
+        for (Vehicle v : vehicles) {
+            if (v.getStatus() == Vehicle.VehicleStatus.RENTED) {
+                System.out.println("|     " + (v instanceof Car ? "Car          " : "Motorcycle   ") + "|\t" + v.getLicensePlate() + "\t|\t" + v.getMake() + "\t|\t" + v.getModel() + "\t|\t" + v.getYear() + "\t|\t");
+            }
+        }
+        System.out.println();
+    }
+    
     public void displayAllVehicles() {
         for (Vehicle v : vehicles) {
             System.out.println("  " + v.getInfo());
@@ -249,7 +262,6 @@ public class RentalSystem {
                     }
 
                     if (vehicle != null && customer != null) {
-                    	System.out.println(type);
                     	if(type.equals("RENT")) {
                         	vehicle.setStatus(Vehicle.VehicleStatus.RENTED);
                     	}
