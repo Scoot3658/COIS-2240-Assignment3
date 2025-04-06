@@ -241,7 +241,6 @@ public class RentalSystem {
 
                     Vehicle vehicle = findVehicleByPlate(plate);
                     Customer customer = findCustomerByName(customerName);
-
                     if (vehicle == null) {
                         System.out.println("Vehicle not found: " + plate);
                     }
@@ -250,6 +249,13 @@ public class RentalSystem {
                     }
 
                     if (vehicle != null && customer != null) {
+                    	System.out.println(type);
+                    	if(type.equals("RENT")) {
+                        	vehicle.setStatus(Vehicle.VehicleStatus.RENTED);
+                    	}
+                    	else {
+                    		vehicle.setStatus(Vehicle.VehicleStatus.AVAILABLE);
+                    	}
                         rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, amount, type), false);
                     }
                 } catch (Exception e) {
