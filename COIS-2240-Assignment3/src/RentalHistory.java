@@ -6,9 +6,11 @@ import java.util.ArrayList;
 public class RentalHistory {
     private List<RentalRecord> rentalRecords = new ArrayList<>();
 
-    public void addRecord(RentalRecord record) {
+    public void addRecord(RentalRecord record, boolean bool) {
         rentalRecords.add(record);
-        saveRecord(record);
+        if(bool) {
+        	saveRecord(record);
+        }
     }
 
     public List<RentalRecord> getRentalHistory() {

@@ -55,7 +55,7 @@ public class RentalSystem {
     public boolean rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
         if (vehicle.getStatus() == Vehicle.VehicleStatus.AVAILABLE) {
             vehicle.setStatus(Vehicle.VehicleStatus.RENTED);
-            rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, amount, "RENT"));
+            rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, amount, "RENT"), true);
             System.out.println("Vehicle rented to " + customer.getCustomerName());
             return true;
         }
@@ -68,7 +68,7 @@ public class RentalSystem {
     public boolean returnVehicle(Vehicle vehicle, Customer customer, LocalDate date, double extraFees) {
         if (vehicle.getStatus() == Vehicle.VehicleStatus.RENTED) {
             vehicle.setStatus(Vehicle.VehicleStatus.AVAILABLE);
-            rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, extraFees, "RETURN"));
+            rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, extraFees, "RETURN"), true);
             System.out.println("Vehicle returned by " + customer.getCustomerName());
             return true;
         }
@@ -223,29 +223,41 @@ public class RentalSystem {
         try (Scanner scanner = new Scanner(new File("rental_records.txt"))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                String[] parts = line.split("\\|");
-                System.out.println(parts.length);
-                if (parts.length == 4) {
-                    String type = parts[0];
-                    String plate = parts[1];
-                    int customerId = Integer.parseInt(parts[2]);
-                    LocalDate date = LocalDate.parse(parts[3]);
-                    double amount = Double.parseDouble(parts[4]);
+                if (line.isEmpty()) continue;
+
+                String[] parts = line.split(" \\| ");
+                if (parts.length != 5) {
+                    System.out.println("Invalid line: " + line);
+                    continue;
+                }
+
+                try {
+                    String type = parts[0].trim();
+                    String plate = parts[1].split(":")[1].trim();
+                    String customerName = parts[2].split(":")[1].trim();
+                    LocalDate date = LocalDate.parse(parts[3].split(":")[1].trim());
+                    String amountStr = parts[4].split(":")[1].trim().replace("$", "");
+                    double amount = Double.parseDouble(amountStr);
 
                     Vehicle vehicle = findVehicleByPlate(plate);
-                    Customer customer = findCustomerById(customerId);
+                    Customer customer = findCustomerByName(customerName);
+
+                    if (vehicle == null) {
+                        System.out.println("Vehicle not found: " + plate);
+                    }
+                    if (customer == null) {
+                        System.out.println("Customer not found: " + customerName);
+                    }
 
                     if (vehicle != null && customer != null) {
-                        RentalRecord record = new RentalRecord(vehicle, customer, date, amount, type);
-                        rentalHistory.addRecord(record);
+                        rentalHistory.addRecord(new RentalRecord(vehicle, customer, date, amount, type), false);
                     }
-                }
-                else {
-                	System.out.println("Shit!");
+                } catch (Exception e) {
+                    System.err.println("Failed to parse line: " + line);
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error loading rental records:"  + e.getMessage());
+            System.err.println("Error loading rental records: " + e.getMessage());
         }
     }		
     
