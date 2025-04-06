@@ -38,7 +38,7 @@ public class RentalHistory {
     //Task 1 Part 2
     private void saveRecord(RentalRecord record) {
         try (FileWriter writer = new FileWriter("rental_records.txt", true)) {
-            writer.write(record.toString());
+            writer.write(record.toString() + "\n");
         } catch (IOException e) {
             System.err.println("Error saving rental record");
         }
