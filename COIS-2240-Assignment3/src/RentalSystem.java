@@ -60,7 +60,7 @@ public class RentalSystem {
             return true;
         }
         else {
-            System.out.println("Vehicle is not available for renting.");
+            System.out.println("Vehicle is not available for renting. \n");
             return false;
         }
     }
@@ -73,7 +73,7 @@ public class RentalSystem {
             return true;
         }
         else {
-            System.out.println("Vehicle is not rented.");
+            System.out.println("Vehicle is not rented.\n");
             return false;
         }
     }    
@@ -136,7 +136,7 @@ public class RentalSystem {
     	try(FileWriter writer = new FileWriter("vehicles.txt", true)){
             writer.write(vehicle.getInfo() + "\n");
     	} catch (IOException e) {
-    		System.err.println("Error saving vehicle");
+    		System.err.println("Error saving vehicle\n");
     	}
     }
     
@@ -144,7 +144,7 @@ public class RentalSystem {
     	try(FileWriter writer = new FileWriter("customers.txt", true)){
     		writer.write(customer.toString() + "\n");
     	} catch (IOException e) {
-    		System.err.println("Error saving customer");
+    		System.err.println("Error saving customer\n");
     	}
     }
     

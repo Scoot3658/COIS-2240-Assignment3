@@ -80,26 +80,19 @@ class VehicleRentalTest {
     @Test
     public void testSingletonRentalSystem() {
         try {
-            // Access the constructor of the RentalSystem class using reflection
             Constructor<RentalSystem> constructor = RentalSystem.class.getDeclaredConstructor();
 
-            // Check if the constructor is private
             assertEquals(Modifier.PRIVATE, constructor.getModifiers(), "Constructor should be private");
 
-            // Try to instantiate the RentalSystem using the Singleton method
-            RentalSystem instance1 = RentalSystem.getInstance(); // Singleton instance
+            RentalSystem instance1 = RentalSystem.getInstance();
 
-            // Create a new instance via reflection (this should succeed, but we want to check singleton behavior)
             constructor.setAccessible(true);
-            RentalSystem instance2 = constructor.newInstance(); // Reflection-based instance
+            RentalSystem instance2 = constructor.newInstance();
 
-            // Assert that instance1 and instance2 are different, confirming reflection bypasses singleton
             assertNotSame(instance1, instance2, "Reflection should create a new instance.");
 
-            // Validate that the getInstance() method is still giving the correct instance
             RentalSystem instance3 = RentalSystem.getInstance();
 
-            // Assert that instance3 is the same as instance1, confirming Singleton behavior
             assertSame(instance1, instance3, "getInstance() should return the same instance every time.");
             
         } catch (Exception e) {
