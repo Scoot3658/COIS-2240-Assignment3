@@ -223,8 +223,9 @@ public class RentalSystem {
         try (Scanner scanner = new Scanner(new File("rental_records.txt"))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                String[] parts = line.split(",");
-                if (parts.length == 5) {
+                String[] parts = line.split("\\|");
+                System.out.println(parts.length);
+                if (parts.length == 4) {
                     String type = parts[0];
                     String plate = parts[1];
                     int customerId = Integer.parseInt(parts[2]);
@@ -238,6 +239,9 @@ public class RentalSystem {
                         RentalRecord record = new RentalRecord(vehicle, customer, date, amount, type);
                         rentalHistory.addRecord(record);
                     }
+                }
+                else {
+                	System.out.println("Shit!");
                 }
             }
         } catch (IOException e) {
